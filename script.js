@@ -4,8 +4,6 @@ const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"
 const suits = ["S", "D",  "C",  "H"]
 
 let deck = []
-let playerCards = []
-let dealerCards = []
 
 let dealerCards1
 let dealerCards2
@@ -17,6 +15,9 @@ let playerAceCount = 0
 let dealerAceCount = 0
 let dealerSum = 0
 let playerSum = 0
+
+let canHit = false
+let canStand = false
 
 const message = document.getElementById("message")
 
@@ -89,33 +90,59 @@ function deal(){
         dealerSum -= 10
         dealerAceCount -= 1
     }
+
+    canHit = true
 }
 
 // When the player chooses to hit
 function hit(){
+    if (canHit === true){
+        // Adding another card to the hand and updating the sum
+        hitCard = deck.pop(Math.floor(Math.random() * deck.length))
+        playerSum += playerCardValue(hitCard)
 
-    // Adding another card to the hand and updating the sum
-    hitCard = deck.pop(Math.floor(Math.random() * deck.length))
-    playerSum += playerCardValue(hitCard)
-
-    // Checking if the hand has bust and how many aces there are
-    if (playerSum > 21 && playerAceCount > 0) {
-        playerSum -= 10
-        playerAceCount -= 1
-    } else if (playerSum > 21 && playerAceCount === 0){
-        message.innerText = "You lose!"
+        // Checking if the hand has bust and how many aces there are
+        if (playerSum > 21 && playerAceCount > 0) {
+            playerSum -= 10
+            playerAceCount -= 1
+            canStand = true;
+        } else if (playerSum > 21 && playerAceCount === 0){
+            message.innerText = "Dealer wins!"
+            canStand = false;
+        }
+    }else{
+        return
     }
 }
 
 // When the player chooses to stand
 function stand(){
-
-    if (dealerSum < 16){
-        hitCard = deck.pop(Math.floor(Math.random() * deck.length))
-        dealerSum += dealerCardValue(hitCard)
+    if (canStand = true){
+        if (dealerSum < 16){
+            hitCard = deck.pop(Math.floor(Math.random() * deck.length))
+            dealerSum += dealerCardValue(hitCard)
+            splitCard = hitCard.split(" ")
+    
+            if (hitCard[0] === 'A' && dealerAceCount > 0){
+                dealerSum -= 10
+                dealerAceCount -= 1
+            }
+    
+        }else if (dealerSum > 21){
+            message.innerText = "You win!"
+        }else if (dealerSum > playerSum){
+            message.innerText = "Dealer wins!"
+        }else if (dealerSum < playerSum){
+            message.innerText = "You win!"
+        }else if(dealerSum === playerSum){
+            message.innerText = "Tie!"
+        }
+    }else{
+        return
     }
-
-    // Checking if the hand has bust and how many aces there are
 
 }
 
+document.getElementById("deal").addEventListener("click", deal)
+document.getElementById("hit").addEventListener("click", hit)
+document.getElementById("stand").addEventListener("click", stand)
