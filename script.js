@@ -1,45 +1,60 @@
 
-
 const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 const suits = ["S", "D",  "C",  "H"]
 
 let deck = []
+let playerHand = []
+let dealerHand = []
 
 let dealerCards1
 let dealerCards2
 let playerCards1
 let playerCards2
-let hitCard
+let hitCardPlayer
+let hitCardDealer
 
 let playerAceCount = 0
 let dealerAceCount = 0
 let dealerSum = 0
 let playerSum = 0
 
+let canDeal = true
 let canHit = false
 let canStand = false
 
+const dealbutton = document.getElementById("deal")
 const message = document.getElementById("message")
+let playerHandDiv = document.getElementById('playerhand')
+let dealerHandDiv = document.getElementById('dealerhand')
+
 
 //--------------------------------------------------------------------------------------------//
 
-// Running the function to create the deck when the browser page loads
+// 1. Running the function to create the deck when the browser page loads
 window.onload = createDeck()
 
 //--------------------------------------------------------------------------------------------//
 
-// Creating the deck throuch the combination of the card values and suits previously declared
+// 2. Creating the deck throuch the combination of the card values and suits previously declared
 function createDeck(){
     suits.forEach((suit) => {
         values.forEach((value)=> {
-            deck.push(value + " " + suit);
+            deck.push(value + "-" + suit);
         });
     });
+    
+    for(let i=0; i< deck.length; i++){
+        let shuffle = Math.floor(Math.random() * deck.length); 
+        let temp = deck[i];
+        deck[i] = deck[shuffle];
+        deck[shuffle] = temp;
+    };
+    //console.log(deck)
 }
 
-// Taking the value of the player's cards
+// 3. Taking the value of the player's cards
 function playerCardValue(card){
-    let splitCard = card.split(" ")
+    let splitCard = card.split("-")
     let value = splitCard[0]
     
     if (isNaN(value)) {
@@ -50,12 +65,12 @@ function playerCardValue(card){
             return 10
         }
     }
-    return value
+    return parseInt(value)
 }
 
-// Taking the value of the dealer's cards
+// 4. Taking the value of the dealer's cards
 function dealerCardValue(card){
-    let splitCard = card.split(" ")
+    let splitCard = card.split("-")
     let value = splitCard[0]
     
     if (isNaN(value)) {
@@ -66,16 +81,45 @@ function dealerCardValue(card){
             return 10
         }
     }
-    return value
+    return parseInt(value)
 }
 
-// Creating the hand of the player and the dealer 
+// 5. Creating the hand of the player and the dealer 
 function deal(){
+
+    playerHand = [];
+    dealerHand = [];
+    playerSum = 0;
+    dealerSum = 0;
+    playerAceCount = 0;
+    dealerAceCount = 0;
+    canDeal = true;
+    canHit = false;
+    canStand = false;
+    message.innerText = "";
+
+    if (canDeal === true){
+
+    // Taking random cards out of the deck
     playerCards1 = deck.pop(Math.floor(Math.random() * deck.length))
     playerCards2 = deck.pop(Math.floor(Math.random() * deck.length))
     dealerCards1 = deck.pop(Math.floor(Math.random() * deck.length))
     dealerCards2 = deck.pop(Math.floor(Math.random() * deck.length))
 
+    // Updating player's and dealer's hand
+    playerHand.push(playerCards1)
+    playerHandDiv.innerHTML = playerHand
+
+    playerHand.push(playerCards2)
+    playerHandDiv.innerHTML = playerHand
+
+    dealerHand.push(dealerCards1)
+    dealerHandDiv.innerHTML = dealerHand
+
+    dealerHand.push(dealerCards2)
+    dealerHandDiv.innerHTML = dealerHand
+
+    // Updating player's and dealer's sum
     playerSum += playerCardValue(playerCards1) + playerCardValue(playerCards2)
     dealerSum += dealerCardValue(dealerCards1) + dealerCardValue(dealerCards2) 
 
@@ -92,14 +136,21 @@ function deal(){
     }
 
     canHit = true
+    canStand = true
+    canDeal = false
+    }
+    dealbutton.disabled = true
 }
 
-// When the player chooses to hit
+// 6. When the player chooses to hit
 function hit(){
     if (canHit === true){
         // Adding another card to the hand and updating the sum
-        hitCard = deck.pop(Math.floor(Math.random() * deck.length))
-        playerSum += playerCardValue(hitCard)
+        hitCardPlayer = deck.pop(Math.floor(Math.random() * deck.length))
+        playerSum += playerCardValue(hitCardPlayer)
+
+        playerHand.push(hitCardPlayer)
+        playerHandDiv.innerHTML = playerHand
 
         // Checking if the hand has bust and how many aces there are
         if (playerSum > 21 && playerAceCount > 0) {
@@ -109,40 +160,55 @@ function hit(){
         } else if (playerSum > 21 && playerAceCount === 0){
             message.innerText = "Dealer wins!"
             canStand = false;
+            canDeal = true;
+            dealbutton.disabled = false
         }
     }else{
         return
     }
 }
 
-// When the player chooses to stand
+// 7. When the player chooses to stand
 function stand(){
-    if (canStand = true){
-        if (dealerSum < 16){
-            hitCard = deck.pop(Math.floor(Math.random() * deck.length))
-            dealerSum += dealerCardValue(hitCard)
-            splitCard = hitCard.split(" ")
-    
-            if (hitCard[0] === 'A' && dealerAceCount > 0){
-                dealerSum -= 10
-                dealerAceCount -= 1
-            }
-    
-        }else if (dealerSum > 21){
+    if (canStand === true){
+        canHit = false
+        if (dealerSum < 17){    
+            do{
+                hitCardDealer = deck.pop(Math.floor(Math.random() * deck.length))
+                dealerSum += dealerCardValue(hitCardDealer)
+                dealerHand.push(hitCardDealer)
+                dealerHandDiv.innerHTML = dealerHand
+
+                splitCard = hitCardDealer.split("-")
+                
+                if (hitCardDealer[0] === 'A' && dealerAceCount > 0){
+                    dealerSum -= 10
+                    dealerAceCount -= 1
+                }
+            }while (dealerSum < 17);
+        }
+                
+        if (dealerSum > 21){
             message.innerText = "You win!"
+            canDeal = true;
+            dealbutton.disabled = false
         }else if (dealerSum > playerSum){
             message.innerText = "Dealer wins!"
+            canDeal = true;
+            dealbutton.disabled = false
         }else if (dealerSum < playerSum){
             message.innerText = "You win!"
+            canDeal = true;
+            dealbutton.disabled = false
         }else if(dealerSum === playerSum){
-            message.innerText = "Tie!"
+             message.innerText = "Tie!"
+             canDeal = true;
+             dealbutton.disabled = false
         }
-    }else{
-        return
     }
-
 }
 
-document.getElementById("deal").addEventListener("click", deal)
+dealbutton.addEventListener("click", deal)
+dealbutton.addEventListener("click", createDeck)
 document.getElementById("hit").addEventListener("click", hit)
 document.getElementById("stand").addEventListener("click", stand)
