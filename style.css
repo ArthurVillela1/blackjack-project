@@ -19,7 +19,7 @@ body {
 #hands{
     display:flex;
     flex-direction:column-reverse;
-    gap:250px;
+    gap:180px;
 }
 
 #playerhand, #dealerhand{
@@ -67,14 +67,4 @@ button:disabled{
 button:active {
     transform: scale(0.99); 
     box-shadow: 2px 2px 2px black;
-}
-
-/*.container{
-    width:900px;
-    background: url('https://i.imgur.com/RzjoUEZ.jpeg');
-    background-color:#7b4a30;
-    height:6000px;
-    border-radius: 80px;
-    box-shadow: 10px 0 0 0 black;
-    z-index:1;
 }
