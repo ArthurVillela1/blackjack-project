@@ -1,44 +1,43 @@
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color:#0B5345;
-    
+    height: 100vh;
+    flex-direction: column;
 }
 
-#playerhand img{
-    height: 250px;
-    width: 175px;
-    margin: 5px;
-    position:relative;
-    left:370px;
-    top:500px;
-    align-items: center
+#hands{
+    display:flex;
+    flex-direction:column-reverse;
+    gap:25px;
 }
 
-#dealerhand img{
-    height: 250px;
-    width: 175px;
+#playerhand, #dealerhand{
+    display:flex;
     margin: 5px;
-    position:relative;
-    top:50px;
-    align-items: center
+    align-items: center;
+    justify-content:center;
+    flex-direction:row;
+    gap:20px;
+}
+
+#playerhand img, #dealerhand img{
+    height:25vh;
 }
 
 .buttons {
-    height: 50px;
-    width: 85px;
-    margin: 5px;
-    position:relative;
-    right:325px;
-    top:700px;
-    font-size:25px; 
+    height:150px;
+    width:170px;
+    font-size:50px;
+}
+
+#gamebuttons {
+    justify-content:space-around;
 }
 
 p {
    font-size:25px;
-   position:relative; 
-   right:480px;
-   top:770px;
    color:white;
 }
