@@ -187,42 +187,50 @@ function stand(){
         dealerHandDiv.replaceChild(cardImg3, Back)
         if (dealerSum < 17){    
             do{
-                //setTimeout(() => {
-                    hitCardDealer = deck.pop(Math.floor(Math.random() * deck.length))
-                    dealerSum += dealerCardValue(hitCardDealer)
+               hitCardDealer = deck.pop(Math.floor(Math.random() * deck.length))
+               dealerSum += dealerCardValue(hitCardDealer)
 
-                    let cardImg = document.createElement("img")
+               let cardImg = document.createElement("img")
+               setTimeout(() => {
                     cardImg.src = "./Cards/" + hitCardDealer + ".png"
                     dealerHandDiv.append(cardImg)
+                },1000);  
 
-                    splitCard = hitCardDealer.split("-")
+                splitCard = hitCardDealer.split("-")
                     
                     if (hitCardDealer[0] === 'A' && dealerAceCount > 0){
                         dealerSum -= 10
                         dealerAceCount -= 1
-                    }
-                //},1000)    
+                    }  
             }while (dealerSum < 17);
-        }
-                
+        
         if (dealerSum > 21){
-            message.innerText = "You win!"
+            setTimeout(() => {
+                message.innerText = "You win!"
+            },1000); 
             canDeal = true;
             dealbutton.disabled = false
         }else if (dealerSum > playerSum){
-            message.innerText = "Dealer wins!"
+            setTimeout(() => {
+                message.innerText = "Dealer wins!"
+            },1000); 
             canDeal = true;
             dealbutton.disabled = false
         }else if (dealerSum < playerSum){
-            message.innerText = "You win!"
+            setTimeout(() => {
+                message.innerText = "You win!"
+            },1000);
             canDeal = true;
             dealbutton.disabled = false
         }else if(dealerSum === playerSum){
-             message.innerText = "Tie!"
+             setTimeout(() => {
+                message.innerText = "Tie!"
+             },1000);
              canDeal = true;
              dealbutton.disabled = false
         }
     }
+}
 }
 
 dealbutton.addEventListener("click", deal)
