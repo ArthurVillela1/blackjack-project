@@ -77,3 +77,27 @@ button:active {
     z-index:-1;
     top:260px;
 }
+
+.rules-div {
+position: absolute;
+width:1200px;
+color:white;
+font-size:55px;
+top:0px;
+left:20px;
+}
+  
+.rules-div::after {
+content: "In Blackjack, everyone plays against the dealer. The goal is to get closer to 21 than the dealer without going over 21. If a hand goes over 21, it is called a “bust” or “break” and the wager is lost. Jacks, Queens and Kings count as 10. An Ace may be played as a 1 or an 11. All other cards are played at face value.";
+position: absolute;
+top: 100%;
+left: 0;
+visibility: hidden;
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+
+.rules-div:hover::after {
+visibility: visible;
+opacity: 1;
+}

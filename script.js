@@ -124,8 +124,8 @@ function deal(){
     cardImg3.src = "./Cards/" + dealerCard1 + ".png"
     dealerHandDiv.appendChild(Back)
 
-    Back.classname = "back"
-    cardImg3.classname = "front"
+    Back.classList.add("back")
+    cardImg3.classList.add("front")
 
     cardImg4.src = "./Cards/" + dealerCard2 + ".png"
     dealerHandDiv.append(cardImg4)
