@@ -124,6 +124,9 @@ function deal(){
     cardImg3.src = "./Cards/" + dealerCard1 + ".png"
     dealerHandDiv.appendChild(Back)
 
+    Back.classname = "back"
+    cardImg3.classname = "front"
+
     cardImg4.src = "./Cards/" + dealerCard2 + ".png"
     dealerHandDiv.append(cardImg4)
 
@@ -172,6 +175,7 @@ function hit(){
             dealerHandDiv.replaceChild(cardImg3, Back)
             message.innerText = "Dealer wins!"
             canStand = false;
+            canHit = false;
             canDeal = true;
             dealbutton.disabled = false
         }
@@ -185,51 +189,41 @@ function stand(){
     if (canStand === true){
         canHit = false
         dealerHandDiv.replaceChild(cardImg3, Back)
-        let timeout = 1000
         if (dealerSum < 17){    
             do{
                     hitCardDealer = deck.pop(Math.floor(Math.random() * deck.length))
                     dealerSum += dealerCardValue(hitCardDealer)
+                    console.log(dealerSum)
 
                     let cardImg = document.createElement("img")
 
-                    setTimeout(() => {
-                    cardImg.src = "./Cards/" + hitCardDealer + ".png"
-                    dealerHandDiv.append(cardImg)
-                    },timeout)
+                        cardImg.src = "./Cards/" + hitCardDealer + ".png"
+                        
+                        dealerHandDiv.append(cardImg)
+                        console.log(cardImg.src)
 
                     splitCard = hitCardDealer.split("-")
                     if (hitCardDealer[0] === 'A' && dealerAceCount > 0){
                         dealerSum -= 10
                         dealerAceCount -= 1
                     }
-
-                    timeout += 1000
             }while (dealerSum < 17);
         }
                 
         if (dealerSum > 21){
-            setTimeout(() => {
             message.innerText = "You win!"
-            },timeout)
             canDeal = true;
             dealbutton.disabled = false
         }else if (dealerSum > playerSum){
-            setTimeout(() => {
             message.innerText = "Dealer wins!"
-            },timeout)
             canDeal = true;
             dealbutton.disabled = false
         }else if (dealerSum < playerSum){
-            setTimeout(() => {
             message.innerText = "You win!"
-            },timeout)
             canDeal = true;
             dealbutton.disabled = false
         }else if(dealerSum === playerSum){
-             setTimeout(() => {
              message.innerText = "Tie!"
-             },timeout)
              canDeal = true;
              dealbutton.disabled = false
         }

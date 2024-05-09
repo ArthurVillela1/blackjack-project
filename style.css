@@ -57,7 +57,6 @@ p {
    font-size:65px;
    font-family: Helvetica;
    color:white;
-   
 }
 
 button:disabled{
@@ -67,4 +66,14 @@ button:disabled{
 button:active {
     transform: scale(0.99); 
     box-shadow: 2px 2px 2px black;
+}
+
+.title{
+    position:fixed;
+    font-size: 800px;
+    font-family: 'BlackJack', sans-serif;
+    color:grey;
+    opacity:0.3;
+    z-index:-1;
+    top:260px;
 }
