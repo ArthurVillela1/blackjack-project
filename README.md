@@ -131,17 +131,17 @@ function deal(){
         dealerCard1 = deck.pop(Math.floor(Math.random() * deck.length))
         dealerCard2 = deck.pop(Math.floor(Math.random() * deck.length))
 
-        cardImg1.src = "./Cards/" + playerCard1 + ".svg"
+        cardImg1.src = "./Cards/" + playerCard1 + ".png"
         playerHandDiv.append(cardImg1)
 
-        cardImg2.src = "./Cards/" + playerCard2 + ".svg"
+        cardImg2.src = "./Cards/" + playerCard2 + ".png"
         playerHandDiv.append(cardImg2)
 
-        Back.src = "./Cards/BACK.svg"
-        cardImg3.src = "./Cards/" + dealerCard1 + ".svg"
+        Back.src = "./Cards/BACK.png"
+        cardImg3.src = "./Cards/" + dealerCard1 + ".png"
         dealerHandDiv.appendChild(Back)
 
-        cardImg4.src = "./Cards/" + dealerCard2 + ".svg"
+        cardImg4.src = "./Cards/" + dealerCard2 + ".png"
         dealerHandDiv.append(cardImg4)
 
         playerSum += playerCardValue(playerCard1) + playerCardValue(playerCard2)
@@ -177,7 +177,7 @@ function hit(){
         playerHand.push(hitCardPlayer)
 
         let cardImg = document.createElement("img")
-        cardImg.src = "./Cards/" + hitCardPlayer + ".svg"
+        cardImg.src = "./Cards/" + hitCardPlayer + ".png"
         playerHandDiv.append(cardImg)
 
     if (playerSum > 21 && playerAceCount > 0) {
@@ -209,7 +209,7 @@ function stand(){
                 dealerSum += dealerCardValue(hitCardDealer)
 
                 let cardImg = document.createElement("img")
-                cardImg.src = "./Cards/" + hitCardDealer + ".svg"
+                cardImg.src = "./Cards/" + hitCardDealer + ".png"
                 dealerHandDiv.append(cardImg)
                 splitCard = hitCardDealer.split("-")
                     
