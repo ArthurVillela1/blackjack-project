@@ -350,4 +350,3 @@ opacity: 1;
 
 **Background**: https://projects.verou.me/css3patterns/#blueprint-grid
 
-**Cards**: https://github.com/ImKennyYip/black-jack/tree/master/cards
