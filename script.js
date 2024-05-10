@@ -22,8 +22,6 @@ let canDeal = true
 let canHit = false
 let canStand = false
 
-const dealbutton = document.getElementById("deal")
-const message = document.getElementById("message")
 let playerHandDiv = document.getElementById('playerhand')
 let dealerHandDiv = document.getElementById('dealerhand')
 let cardImg1 = document.createElement("img")
@@ -32,14 +30,18 @@ let cardImg3 = document.createElement("img")
 let cardImg4 = document.createElement("img")
 let Back = document.createElement("img")
 
-//--------------------------------------------------------------------------------------------//
+const dealbutton = document.getElementById("deal")
+const message = document.getElementById("message")
+const hitbutton = document.getElementById("hit")
+const standbutton = document.getElementById("stand")
 
-// 1. Running the function to create the deck when the browser page loads
+dealbutton.addEventListener("click", deal)
+dealbutton.addEventListener("click", createDeck)
+hitbutton.addEventListener("click", hit)
+standbutton.addEventListener("click", stand)
+
 window.onload = createDeck()
 
-//--------------------------------------------------------------------------------------------//
-
-// 2. Creating the deck throuch the combination of the card values and suits previously declared
 function createDeck(){
     suits.forEach((suit) => {
         values.forEach((value)=> {
@@ -53,10 +55,8 @@ function createDeck(){
         deck[i] = deck[shuffle];
         deck[shuffle] = temp;
     };
-    //console.log(deck)
 }
 
-// 3. Taking the value of the player's cards
 function playerCardValue(card){
     let splitCard = card.split("-")
     let value = splitCard[0]
@@ -72,7 +72,6 @@ function playerCardValue(card){
     return parseInt(value)
 }
 
-// 4. Taking the value of the dealer's cards
 function dealerCardValue(card){
     let splitCard = card.split("-")
     let value = splitCard[0]
@@ -88,7 +87,6 @@ function dealerCardValue(card){
     return parseInt(value)
 }
 
-// 5. Creating the hand of the player and the dealer 
 function deal(){
     playerHand = [];
     dealerHand = [];
@@ -101,46 +99,39 @@ function deal(){
     canStand = false;
     message.innerText = "";
 
-
     if (canDeal === true){
-    playerHandDiv.textContent = ""
-    dealerHandDiv.textContent = ""
-    
-    // Taking random cards out of the deck
-    playerCard1 = deck.pop(Math.floor(Math.random() * deck.length))
-    playerCard2 = deck.pop(Math.floor(Math.random() * deck.length))
-    dealerCard1 = deck.pop(Math.floor(Math.random() * deck.length))
-    dealerCard2 = deck.pop(Math.floor(Math.random() * deck.length))
+        playerHandDiv.textContent = ""
+        dealerHandDiv.textContent = ""
 
-    // Updating player's and dealer's hand
+        playerCard1 = deck.pop(Math.floor(Math.random() * deck.length))
+        playerCard2 = deck.pop(Math.floor(Math.random() * deck.length))
+        dealerCard1 = deck.pop(Math.floor(Math.random() * deck.length))
+        dealerCard2 = deck.pop(Math.floor(Math.random() * deck.length))
 
-    cardImg1.src = "./Cards/" + playerCard1 + ".png"
-    playerHandDiv.append(cardImg1)
+        cardImg1.src = "./Cards/" + playerCard1 + ".png"
+        playerHandDiv.append(cardImg1)
 
-    cardImg2.src = "./Cards/" + playerCard2 + ".png"
-    playerHandDiv.append(cardImg2)
+        cardImg2.src = "./Cards/" + playerCard2 + ".png"
+        playerHandDiv.append(cardImg2)
 
-    Back.src = "./Cards/BACK.png"
-    cardImg3.src = "./Cards/" + dealerCard1 + ".png"
-    dealerHandDiv.appendChild(Back)
+        Back.src = "./Cards/BACK.png"
+        cardImg3.src = "./Cards/" + dealerCard1 + ".png"
+        dealerHandDiv.appendChild(Back)
 
-    Back.classList.add("back")
-    cardImg3.classList.add("front")
+        Back.classList.add("back")
+        cardImg3.classList.add("front")
 
-    cardImg4.src = "./Cards/" + dealerCard2 + ".png"
-    dealerHandDiv.append(cardImg4)
+        cardImg4.src = "./Cards/" + dealerCard2 + ".png"
+        dealerHandDiv.append(cardImg4)
 
-    // Updating player's and dealer's sum
-    playerSum += playerCardValue(playerCard1) + playerCardValue(playerCard2)
-    dealerSum += dealerCardValue(dealerCard1) + dealerCardValue(dealerCard2) 
+        playerSum += playerCardValue(playerCard1) + playerCardValue(playerCard2)
+        dealerSum += dealerCardValue(dealerCard1) + dealerCardValue(dealerCard2) 
 
-    // Checking if the player's hand starts with two aces in case he doesn't hit
     if (playerSum === 22) {
         playerSum -= 10
         playerAceCount -= 1
     }
 
-    // Checking if the dealer's hand start with two aces
     if (dealerSum === 22) {
         dealerSum -= 10
         dealerAceCount -= 1
@@ -153,10 +144,9 @@ function deal(){
     dealbutton.disabled = true
 }
 
-// 6. When the player chooses to hit
 function hit(){
     if (canHit === true){
-        // Adding another card to the hand and updating the sum
+
         hitCardPlayer = deck.pop(Math.floor(Math.random() * deck.length))
         playerSum += playerCardValue(hitCardPlayer)
 
@@ -166,47 +156,41 @@ function hit(){
         cardImg.src = "./Cards/" + hitCardPlayer + ".png"
         playerHandDiv.append(cardImg)
 
-        // Checking if the hand has bust and how many aces there are
-        if (playerSum > 21 && playerAceCount > 0) {
-            playerSum -= 10
-            playerAceCount -= 1
-            canStand = true;
-        } else if (playerSum > 21 && playerAceCount === 0){
-            dealerHandDiv.replaceChild(cardImg3, Back)
-            message.innerText = "Dealer wins!"
-            canStand = false;
-            canHit = false;
-            canDeal = true;
-            dealbutton.disabled = false
-        }
+    if (playerSum > 21 && playerAceCount > 0) {
+        playerSum -= 10
+        playerAceCount -= 1
+         canStand = true;
+    } else if (playerSum > 21 && playerAceCount === 0){
+        dealerHandDiv.replaceChild(cardImg3, Back)
+        message.innerText = "Dealer wins!"
+        canStand = false;
+        canHit = false;
+        canDeal = true;
+        dealbutton.disabled = false
+    }
     }else{
         return
     }
 }
 
-// 7. When the player chooses to stand
 function stand(){
     if (canStand === true){
         canHit = false
         dealerHandDiv.replaceChild(cardImg3, Back)
         if (dealerSum < 17){    
             do{
-                    hitCardDealer = deck.pop(Math.floor(Math.random() * deck.length))
-                    dealerSum += dealerCardValue(hitCardDealer)
-                    console.log(dealerSum)
+                hitCardDealer = deck.pop(Math.floor(Math.random() * deck.length))
+                dealerSum += dealerCardValue(hitCardDealer)
 
-                    let cardImg = document.createElement("img")
-
-                        cardImg.src = "./Cards/" + hitCardDealer + ".png"
-                        
-                        dealerHandDiv.append(cardImg)
-                        console.log(cardImg.src)
-
-                    splitCard = hitCardDealer.split("-")
-                    if (hitCardDealer[0] === 'A' && dealerAceCount > 0){
-                        dealerSum -= 10
-                        dealerAceCount -= 1
-                    }
+                let cardImg = document.createElement("img")
+                cardImg.src = "./Cards/" + hitCardDealer + ".png"
+                dealerHandDiv.append(cardImg)
+                splitCard = hitCardDealer.split("-")
+                    
+                if (hitCardDealer[0] === 'A' && dealerAceCount > 0){
+                    dealerSum -= 10
+                    dealerAceCount -= 1
+                }
             }while (dealerSum < 17);
         }
                 
@@ -230,7 +214,3 @@ function stand(){
     }
 }
 
-dealbutton.addEventListener("click", deal)
-dealbutton.addEventListener("click", createDeck)
-document.getElementById("hit").addEventListener("click", hit)
-document.getElementById("stand").addEventListener("click", stand)
