@@ -131,17 +131,17 @@ function deal(){
         dealerCard1 = deck.pop(Math.floor(Math.random() * deck.length))
         dealerCard2 = deck.pop(Math.floor(Math.random() * deck.length))
 
-        cardImg1.src = "./Cards/" + playerCard1 + ".png"
+        cardImg1.src = "./Cards/" + playerCard1 + ".svg"
         playerHandDiv.append(cardImg1)
 
-        cardImg2.src = "./Cards/" + playerCard2 + ".png"
+        cardImg2.src = "./Cards/" + playerCard2 + ".svg"
         playerHandDiv.append(cardImg2)
 
-        Back.src = "./Cards/BACK.png"
-        cardImg3.src = "./Cards/" + dealerCard1 + ".png"
+        Back.src = "./Cards/BACK.svg"
+        cardImg3.src = "./Cards/" + dealerCard1 + ".svg"
         dealerHandDiv.appendChild(Back)
 
-        cardImg4.src = "./Cards/" + dealerCard2 + ".png"
+        cardImg4.src = "./Cards/" + dealerCard2 + ".svg"
         dealerHandDiv.append(cardImg4)
 
         playerSum += playerCardValue(playerCard1) + playerCardValue(playerCard2)
@@ -177,7 +177,7 @@ function hit(){
         playerHand.push(hitCardPlayer)
 
         let cardImg = document.createElement("img")
-        cardImg.src = "./Cards/" + hitCardPlayer + ".png"
+        cardImg.src = "./Cards/" + hitCardPlayer + ".svg"
         playerHandDiv.append(cardImg)
 
     if (playerSum > 21 && playerAceCount > 0) {
@@ -209,7 +209,7 @@ function stand(){
                 dealerSum += dealerCardValue(hitCardDealer)
 
                 let cardImg = document.createElement("img")
-                cardImg.src = "./Cards/" + hitCardDealer + ".png"
+                cardImg.src = "./Cards/" + hitCardDealer + ".svg"
                 dealerHandDiv.append(cardImg)
                 splitCard = hitCardDealer.split("-")
                     
@@ -346,7 +346,9 @@ visibility: visible;
 opacity: 1;
 }
 ```
-## References
+## Attributions
 
 **Background**: https://projects.verou.me/css3patterns/#blueprint-grid
+
+**Cards**: https://github.com/hayeah/playing-cards-assets/tree/master/svg-cards
 
