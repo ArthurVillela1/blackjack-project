@@ -25,6 +25,10 @@ The 'Deal' button is abled again after the winner is declared.
 
 ![](./Images/GameScreenshot3.png)
 
+The rules of the game can be seen by hovering 'Rules' at the top left of the page. 
+
+![](./Images/GameScreenshot4.png)
+
 ## Game Code Details
 
 **HTML Structure**
@@ -239,3 +243,114 @@ function stand(){
     }
 }
 ```
+**CSS Styling**
+```css
+
+@import url('https://fonts.cdnfonts.com/css/black-jack');
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#0B5345;
+    height: 100vh;
+    flex-direction: column;
+    background-image: linear-gradient(#0B5345 2px, transparent 2px),
+    linear-gradient(90deg, #0B5345 2px, transparent 2px),
+    linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
+}
+
+#hands{
+    display:flex;
+    flex-direction:column-reverse;
+    gap:180px;
+}
+
+#playerhand, #dealerhand{
+    display:flex;
+    margin: 5px;
+    align-items: center;
+    justify-content:center;
+    flex-direction:row;
+    gap:20px;
+}
+
+#playerhand img, #dealerhand img{
+    height:25vh;
+}
+
+.buttons {
+    height:150px;
+    width:210px;
+    font-size:60px;
+    box-shadow: 10px 10px 10px black;
+    border-radius: 40px;
+    background: url('https://i.imgur.com/RzjoUEZ.jpeg');
+    color:#f7ece1;
+    font-family: 'BlackJack', sans-serif;
+}
+
+#gamebuttons {
+    display:flex;
+    justify-content:space-around;
+    gap:40px;
+    margin:70px;
+}
+
+p {
+   font-size:65px;
+   font-family: Helvetica;
+   color:white;
+}
+
+button:disabled{
+    background:transparent;
+}
+
+button:active {
+    transform: scale(0.99); 
+    box-shadow: 2px 2px 2px black;
+}
+
+.title{
+    position:fixed;
+    font-size: 800px;
+    font-family: 'BlackJack', sans-serif;
+    color:grey;
+    opacity:0.3;
+    z-index:-1;
+    top:260px;
+}
+
+.rules-div {
+position: absolute;
+width:1200px;
+color:white;
+font-size:55px;
+top:0px;
+left:20px;
+}
+  
+.rules-div::after {
+content: "In Blackjack, everyone plays against the dealer. The goal is to get closer to 21 than the dealer without going over 21. If a hand goes over 21, it is called a “bust” or “break” and the wager is lost. Jacks, Queens and Kings count as 10. An Ace may be played as a 1 or an 11. All other cards are played at face value.";
+position: absolute;
+top: 100%;
+left: 0;
+visibility: hidden;
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+
+.rules-div:hover::after {
+visibility: visible;
+opacity: 1;
+}
+```
+## References
+
+**Background**: https://projects.verou.me/css3patterns/#blueprint-grid
+
+**Cards**: https://github.com/ImKennyYip/black-jack/tree/master/cards
