@@ -273,10 +273,12 @@ body {
     justify-content:center;
     flex-direction:row;
     gap:20px;
+    background: url('https://files.slack.com/files-pri/T0351JZQ0-F072Q17EAEA/screenshot_2024-05-10_at_14.14.17.png');
 }
 
 #playerhand img, #dealerhand img{
     height:25vh;
+    
 }
 
 .buttons {
