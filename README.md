@@ -11,6 +11,8 @@
 
 In Blackjack, everyone plays against the dealer. The goal is to get closer to 21 than the dealer without going over 21. If a hand goes over 21, it is called a “bust” or “break” and the wager is lost. Jacks, Queens and Kings count as 10. An Ace may be played as a 1 or an 11. All other cards are played at face value.
 
+[Click here to play the game](https://arthurvillela1.github.io/blackjack-project/)
+
 ## Demo
 
 ![](./Images/GameScreenshot1.png)
